@@ -1,0 +1,92 @@
+---
+const url = Astro.url.pathname
+const isHome = url === "/home"
+const isNovedades = url === "/novedades"
+---
+
+<header class="w-full h-full flex px-2 py-2 justify-between">
+    <div class="flex gap-5">
+        <button class="group relative flex size-12 justify-center gap-1 items-center rounded-full hover:bg-gray-500/20 transition-colors ease-in-out duration-100 cursor-pointer">
+            <span class="bg-white block size-1 rounded-full"></span><span class="bg-white block size-1 rounded-full"></span><span class="bg-white block size-1 rounded-full"></span>
+        </button>
+        <div class="flex justify-center gap-1 items-center">
+            <button 
+                class="group cursor-pointer"
+                onclick="window.history.back()"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                    <path class="text-gray-300 group-hover:text-white group-active:text-gray-300/60 transition-all ease-in-out duration-150" stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                <path class="text-gray-300/30" stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+        </div>
+    </div>
+    <div class="flex items-center gap-1">
+        <a href="/home"
+            class="group flex justify-center hover:bg-neutral-800/95 hover:scale-105 transition-all duration-150 ease-in-out items-center bg-neutral-800/80 rounded-full size-12 cursor-pointer"
+        >
+        {
+            isHome ? (
+               <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" class="size-6" viewBox="0,0,256,256">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M12,2.09961l-11,9.90039h3v9h6v-6h4v6h6v-9h3z"></path></g></g>
+                </svg>
+            ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path class="group-hover:text-white text-neutral-300/80" stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+            )
+        }
+        </a>
+        <div class="group sm:pl-4 justify-between flex-row focus-within:ring-2 focus-within:bg-neutral-800/95 focus-within:ring-white hover:bg-neutral-800/95 transition-colors duration-150 ease-in-out flex bg-neutral-800/80 rounded-full md:w-md w-fit sm:py-3">
+            <div class="sm:flex hidden sm:gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer">
+                    <path class="text-neutral-300/80 transition-colors duration-150 ease-in-out group-focus-within:text-white group-hover:text-white" stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+    
+                <input 
+                type="text"
+                placeholder="¿Qué quieres reproducir?"
+                class="outline-none text-white font-sans w-full hidden sm:block"
+                >
+            </div>
+            <div class="sm:flex hidden gap-3.5  pr-4">
+                <span class="w-[1px] h-12/12 bg-neutral-300/45 self-center"></span>
+                <button class="cursor-pointer" title="Explorar">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path class="text-neutral-300/80 group-hover:text-white transition-colors duration-150 ease-in-out" stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="flex gap-5">
+            <a href="/novedades"
+                class="group flex justify-center hover:bg-neutral-800/95 hover:scale-105 transition-all duration-150 ease-in-out items-center bg-neutral-800/80 rounded-full size-12 cursor-pointer"
+                onpointerenter="document.getElementById('bell').setAttribute('fill', '#ffffff')"
+                onpointerleave="document.getElementById('bell').setAttribute('fill', '#d4d4d4cc')"
+            >
+                {
+                    isNovedades ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="size-7">
+                            <path fill="#ffffff" d="M320 64C302.3 64 288 78.3 288 96L288 99.2C215 114 160 178.6 160 256L160 277.7C160 325.8 143.6 372.5 113.6 410.1L103.8 422.3C98.7 428.6 96 436.4 96 444.5C96 464.1 111.9 480 131.5 480L508.4 480C528 480 543.9 464.1 543.9 444.5C543.9 436.4 541.2 428.6 536.1 422.3L526.3 410.1C496.4 372.5 480 325.8 480 277.7L480 256C480 178.6 425 114 352 99.2L352 96C352 78.3 337.7 64 320 64zM258 528C265.1 555.6 290.2 576 320 576C349.8 576 374.9 555.6 382 528L258 528z"/>
+                        </svg>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="size-7">
+                            <path id="bell" fill="#d4d4d4cc" d="M320 64C306.7 64 296 74.7 296 88L296 97.7C214.6 109.3 152 179.4 152 264L152 278.5C152 316.2 142 353.2 123 385.8L101.1 423.2C97.8 429 96 435.5 96 442.2C96 463.1 112.9 480 133.8 480L506.2 480C527.1 480 544 463.1 544 442.2C544 435.5 542.2 428.9 538.9 423.2L517 385.7C498 353.1 488 316.1 488 278.4L488 263.9C488 179.3 425.4 109.2 344 97.6L344 87.9C344 74.6 333.3 63.9 320 63.9zM488.4 432L151.5 432L164.4 409.9C187.7 370 200 324.6 200 278.5L200 264C200 197.7 253.7 144 320 144C386.3 144 440 197.7 440 264L440 278.5C440 324.7 452.3 370 475.5 409.9L488.4 432zM252.1 528C262 556 288.7 576 320 576C351.3 576 378 556 387.9 528L252.1 528z"/>
+                        </svg>
+                    )
+                }
+            </a>
+            <a href="/perfil"
+                class="group flex justify-center hover:bg-neutral-800/95 hover:scale-105 transition-all duration-150 ease-in-out items-center bg-neutral-800/80 rounded-full size-12 cursor-pointer"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="size-7">
+                    <path fill="#ffffff" d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header>

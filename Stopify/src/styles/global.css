@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+html {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+:root {
+  --animation-pop: pop-animation 0.4s ease-in-out forwards;
+}
+
+@keyframes pop-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
