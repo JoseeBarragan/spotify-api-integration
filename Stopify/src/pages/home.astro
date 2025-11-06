@@ -3,6 +3,7 @@ import type { NewReleasesResponse } from "src/interfaces/apiTypes"
 import MainLayout from "../layouts/mainLayout.astro"
 import NewRealeases from "@components/NewRealeases"
 import { getSecret } from "astro:env/server"
+import TopArtists from "@components/Artists"
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 
@@ -15,7 +16,8 @@ console.log(topArtists)
 ---
 
 <MainLayout>
-    <div class="w-full h-full bg-gradient-to-t from-neutral-900 via-neutral-900 to-gray-800 from-85%">
+    <div class="w-full h-full bg-gradient-to-t from-neutral-900 via-neutral-900 to-gray-800 from-85% pl-11 py-6">
         <NewRealeases client:load newRealeases={newRealeases?.albums.items}/>
+        <TopArtists client:load artists={topArtists}/>
     </div>
 </MainLayout>

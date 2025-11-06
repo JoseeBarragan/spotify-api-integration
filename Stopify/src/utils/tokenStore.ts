@@ -1,6 +1,8 @@
 import fs from "fs"
 import path from "path"
 
+// The token is stored in a file because astro execute this on the Server Side of the app
+
 const file = path.resolve("./.spotify-token.json")
 
 export async function getTokenFromFile() {
