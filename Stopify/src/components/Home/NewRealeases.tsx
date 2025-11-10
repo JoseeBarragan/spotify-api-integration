@@ -2,8 +2,8 @@ import { SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import type { Album } from "src/interfaces/apiTypes";
-import Cards from "./homeCards";
-import Carrousel from "./Carrousel";
+import Cards from "../homeCards";
+import Carrousel from "../Carrousel";
 
 interface Props {
   newRealeases?: Album[] | undefined;

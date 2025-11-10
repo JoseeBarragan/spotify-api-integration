@@ -2,8 +2,8 @@ import { SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import type { ArtistsResponse } from "src/interfaces/apiTypes";
-import Cards from "./homeCards";
-import Carrousel from "./Carrousel";
+import Cards from "../homeCards";
+import Carrousel from "../Carrousel";
 
 interface Props {
   artists: ArtistsResponse | undefined;
@@ -11,7 +11,7 @@ interface Props {
 
 export default function TopArtists({ artists }: Props) {
     return (
-        <div className="flex flex-col mt-4">
+        <div className="flex flex-col">
             <h1 className="text-2xl text-white mb-4">Top Artistas</h1>
             <Carrousel>
               {artists?.artists.map(artist => (

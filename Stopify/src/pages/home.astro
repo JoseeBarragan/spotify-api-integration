@@ -1,9 +1,11 @@
 ---
 import type { NewReleasesResponse } from "src/interfaces/apiTypes"
 import MainLayout from "../layouts/mainLayout.astro"
-import NewRealeases from "@components/NewRealeases"
+import NewRealeases from "@components/Home/NewRealeases"
 import { getSecret } from "astro:env/server"
-import TopArtists from "@components/Artists"
+import TopArtists from "@components/Home/Artists"
+import TopTracks from "../components/Home/TopTracks"
+import Footer from "@components/footer.astro"
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 
@@ -12,12 +14,14 @@ const artistsIds = "4q3ewBCX7sLwd24euuV69X,06HL4z0CvFAxyc27GXpf02,0C8ZW7ezQVs4UR
 const newRealeases: NewReleasesResponse | undefined = await (await fetch(`${FRONTEND_URL}/api/spotify/browse/new-releases?limit=10`)).json()
 const topArtists = await (await fetch(`${FRONTEND_URL}/api/spotify/artists?ids=${artistsIds}`)).json()
 
-console.log(topArtists)
+const top50 = await (await fetch(`${FRONTEND_URL}/api/spotify/playlists/1JVocmG0dGNuEFcQgnMZus/tracks`)).json()
 ---
 
 <MainLayout>
-    <div class="w-full h-full bg-gradient-to-t from-neutral-900 via-neutral-900 to-gray-800 from-85% pl-11 py-6">
+    <div class="w-full h-full bg-gradient-to-t flex flex-col gap-6 from-neutral-900 via-neutral-900 to-violet-950/70 from-65% pl-11 py-6">
         <NewRealeases client:load newRealeases={newRealeases?.albums.items}/>
         <TopArtists client:load artists={topArtists}/>
+        <TopTracks client:load topTracks={top50}/>
+        <Footer />
     </div>
 </MainLayout>

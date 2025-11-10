@@ -127,3 +127,51 @@ export interface Playlist {
   type: "playlist";
   uri: string;
 }
+
+// TRACKS (usados en /playlists/{id}/tracks, /tracks/{id}, etc.)
+
+export interface Track {
+  album: Album;
+  artists: SimplifiedArtist[];
+  available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
+  external_ids: {
+    isrc?: string;
+    ean?: string;
+    upc?: string;
+  };
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  is_local: boolean;
+  name: string;
+  popularity: number;
+  preview_url: string | null;
+  track_number: number;
+  type: "track";
+  uri: string;
+  restrictions?: { reason: string };
+}
+
+// OBJETO DE CADA ITEM DENTRO DE UNA PLAYLIST
+export interface PlaylistTrackObject {
+  added_at: string | null;
+  added_by: SimplifiedUser | null;
+  is_local: boolean;
+  primary_color?: string | null;
+  track: Track;
+  video_thumbnail?: { url: string | null };
+}
+
+// RESPUESTA COMPLETA DEL ENDPOINT /playlists/{id}/tracks
+export interface PlaylistTracksResponse {
+  href: string;
+  items: PlaylistTrackObject[];
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+}
