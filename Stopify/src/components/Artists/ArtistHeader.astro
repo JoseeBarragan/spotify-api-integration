@@ -1,0 +1,9 @@
+---
+import type { SpotifyTopTracksResponse } from "src/interfaces/apiTypes"
+
+const { tracks } = Astro.props as SpotifyTopTracksResponse
+---
+
+<div class="flex">
+    <img src={tracks.at(0)?.album.images.at(0)?.url} alt="" class="w-full h-[900px] object-fill ">
+</div>

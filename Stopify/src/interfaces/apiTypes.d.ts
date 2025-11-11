@@ -175,3 +175,98 @@ export interface PlaylistTracksResponse {
   previous: string | null;
   total: number;
 }
+
+
+// ENDPOINT: ${FRONTEND_URL}/api/spotify/artists/${artist}/top-tracks
+
+export interface SpotifyTopTracksResponse {
+  tracks: SpotifyTrack[];
+}
+
+export interface SpotifyTrack {
+  album: SpotifyAlbum;
+  artists: SpotifyArtist[];
+  available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
+  external_ids: {
+    isrc: string;
+  };
+  external_urls: {
+    spotify: string;
+  };
+  href: string;
+  id: string;
+  is_local: boolean;
+  name: string;
+  popularity: number;
+  preview_url: string | null;
+  track_number: number;
+  type: "track";
+  uri: string;
+}
+
+export interface SpotifyAlbum {
+  album_type: "album" | "single" | "compilation";
+  total_tracks: number;
+  available_markets: string[];
+  external_urls: {
+    spotify: string;
+  };
+  href: string;
+  id: string;
+  images: SpotifyImage[];
+  name: string;
+  release_date: string;
+  release_date_precision: "year" | "month" | "day";
+  type: "album";
+  uri: string;
+}
+
+export interface SpotifyArtist {
+  external_urls: {
+    spotify: string;
+  };
+  href: string;
+  id: string;
+  name: string;
+  type: "artist";
+  uri: string;
+}
+
+export interface SpotifyImage {
+  url: string;
+  height: number;
+  width: number;
+}
+
+// ENDPOINT: /v1/artists/{id}/albums
+// Ejemplo: `${FRONTEND_URL}/api/spotify/artists/${artist}/albums`
+
+export interface ArtistAlbumsResponse {
+  href: string;
+  items: SimplifiedAlbum[];
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
+}
+
+export interface SimplifiedAlbum {
+  album_group?: "album" | "single" | "compilation" | "appears_on";
+  album_type: "album" | "single" | "compilation";
+  artists: SimplifiedArtist[];
+  available_markets: string[];
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: ImageObject[];
+  name: string;
+  release_date: string;
+  release_date_precision: "year" | "month" | "day";
+  total_tracks: number;
+  type: "album";
+  uri: string;
+}

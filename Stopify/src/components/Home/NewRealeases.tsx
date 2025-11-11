@@ -4,12 +4,22 @@ import "swiper/css/navigation";
 import type { Album } from "src/interfaces/apiTypes";
 import Cards from "../homeCards";
 import Carrousel from "../Carrousel";
+import { useEffect } from "react";
 
 interface Props {
   newRealeases?: Album[] | undefined;
 }
 
 export default function NewReleases({ newRealeases }: Props) {
+
+    useEffect(() => {
+      const skeleton = document.getElementById("newRealeases-skeleton")
+      if (skeleton) {
+        skeleton.style.opacity = "0"
+        skeleton.remove()
+      }
+    }, [])
+    
     return (
         <div className="flex flex-col">
             <h1 className="text-2xl text-white mb-4">Nuevos Lanzamientos</h1>

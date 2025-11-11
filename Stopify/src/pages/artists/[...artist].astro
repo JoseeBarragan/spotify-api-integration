@@ -1,0 +1,22 @@
+---
+export const prerender = false;
+import MainLayout from "@layouts/mainLayout.astro";
+import ArtistHeader from "@components/Artists/ArtistHeader.astro"
+import { getSecret } from "astro:env/server";
+
+const FRONTEND_URL = getSecret("FRONTEND_URL")
+const { artist } = Astro.params
+
+const [artistData, artistTopTracks, artistAlbums] = await Promise.all([
+    fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}`).then(r => r.json()),
+    fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/top-tracks`).then(r => r.json()),
+    fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums`).then(r => r.json())
+])
+
+---
+<MainLayout>
+    <div class="h-full w-full relative">
+        <ArtistHeader tracks={artistTopTracks.tracks}/>
+    </div>
+</MainLayout>
+
