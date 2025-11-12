@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Album, Playlist } from "src/interfaces/apiTypes";
+import type { Album, Playlist } from "@/types/apiTypes";
 
 export default function Playlists ({children}: {children: React.ReactNode}) {
   const [openSide, setSide] = useState(false);

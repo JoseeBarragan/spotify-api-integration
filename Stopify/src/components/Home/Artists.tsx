@@ -1,7 +1,7 @@
 import { SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import type { ArtistsResponse } from "src/interfaces/apiTypes";
+import type { ArtistsResponse } from "@/types/apiTypes";
 import Cards from "../homeCards";
 import Carrousel from "../Carrousel";
 import { useEffect } from "react";

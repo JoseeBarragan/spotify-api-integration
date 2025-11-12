@@ -3,20 +3,36 @@ export const prerender = false;
 import MainLayout from "@layouts/mainLayout.astro";
 import ArtistHeader from "@components/Artists/ArtistHeader.astro"
 import { getSecret } from "astro:env/server";
+import type { Artist, SpotifyTopTracksResponse, ArtistAlbumsResponse } from "@/types/apiTypes"
+import { Vibrant } from "node-vibrant/node";
+import type { Palette } from "@/types/VibrantTypes";
+import { GetPaletteHex} from "@/utils/paletteUtils"
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 const { artist } = Astro.params
 
-const [artistData, artistTopTracks, artistAlbums] = await Promise.all([
+const [artistData, artistTopTracks, artistAlbums]: [Artist, SpotifyTopTracksResponse, ArtistAlbumsResponse] = await Promise.all([
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}`).then(r => r.json()),
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/top-tracks`).then(r => r.json()),
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums`).then(r => r.json())
 ])
 
+const imgUrl = artistTopTracks?.tracks?.at(0)?.album?.images?.at(0)?.url
+
+let palette: Palette | null = null
+
+if (imgUrl) {
+    palette = await Vibrant.from(imgUrl).getPalette()
+}
+const HexPalette = GetPaletteHex(palette)
+
 ---
 <MainLayout>
-    <div class="h-full w-full relative">
-        <ArtistHeader tracks={artistTopTracks.tracks}/>
+    <div class="h-full w-full relative z-0"
+        style={`background-color: ${HexPalette.DarkVibrant}`}
+    >
+        <ArtistHeader imgUrl={imgUrl}/>
+        <div class="bg-gradient-to-t from-85% from-neutral-900  to-black/20 backdrop-blur-3xl saturate-150 w-full h-full z-40"></div>
     </div>
 </MainLayout>
 

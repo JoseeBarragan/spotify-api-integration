@@ -3,7 +3,6 @@ import type { APIRoute } from "astro";
 import { getCache, setCache } from "../../../utils/cache";
 import { getTokenFromFile } from "src/utils/tokenStore";
 import refreshToken from "src/services/refreshToken";
-import { object } from "astro:schema";
 
 export const ALL: APIRoute = async ({ request }) => {
     const path = request.url.split("spotify/")[1]
@@ -27,6 +26,7 @@ export const ALL: APIRoute = async ({ request }) => {
         console.log("se termino el token")
         setCache(cacheKey, null)
         await refreshToken()
+        window.location.reload()
     }
     const data = await res.json()
 

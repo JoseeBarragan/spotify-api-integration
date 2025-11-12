@@ -1,4 +1,4 @@
-import type { PlaylistTracksResponse } from "src/interfaces/apiTypes";
+import type { PlaylistTracksResponse } from "@/types/apiTypes";
 import Carrousel from "../Carrousel";
 import { SwiperSlide } from "swiper/react";
 import HomeCards from "../homeCards";

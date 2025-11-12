@@ -17,5 +17,4 @@ export async function getTokenFromFile() {
 export async function saveTokenToFile(token: string, expiresIn: number) {
   const expiresAt = Date.now() + expiresIn * 1000 - 60_000
   fs.writeFileSync(file, JSON.stringify({ accessToken: token, expiresAt }))
-  console.log(expiresAt)
 }

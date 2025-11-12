@@ -1,4 +1,4 @@
-import type { Album, Artist, Track } from "src/interfaces/apiTypes"
+import type { Album, Artist, Track } from "@/types/apiTypes"
 
 export default function HomeCards ({item, imgClass}: {item: Album | Artist | Track, imgClass?: string}) {
     return(
