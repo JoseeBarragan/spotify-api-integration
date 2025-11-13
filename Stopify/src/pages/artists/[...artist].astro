@@ -17,7 +17,7 @@ const [artistData, artistTopTracks, artistAlbums]: [Artist, SpotifyTopTracksResp
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums`).then(r => r.json())
 ])
 
-const imgUrl = artistTopTracks?.tracks?.at(0)?.album?.images?.at(0)?.url
+const imgUrl = artistAlbums.items[0]?.images.at(0)?.url
 
 let palette: Palette | null = null
 
@@ -28,11 +28,13 @@ const HexPalette = GetPaletteHex(palette)
 
 ---
 <MainLayout>
-    <div class="h-full w-full relative z-0"
-        style={`background-color: ${HexPalette.DarkVibrant}`}
-    >
-        <ArtistHeader imgUrl={imgUrl}/>
-        <div class="bg-gradient-to-t from-85% from-neutral-900  to-black/20 backdrop-blur-3xl saturate-150 w-full h-full z-40"></div>
+    <div class="h-full w-full relative z-0 bg-neutral-900">
+        <ArtistHeader imgUrl={imgUrl} color={HexPalette.DarkMuted} artist={artistData}/>
+        <div 
+            class="backdrop-blur-3xl saturate-150 w-full h-full z-40"
+            style={`background: linear-gradient(to top, #171717 85%, ${HexPalette.DarkMuted}80);`}
+        >
+        </div>
     </div>
 </MainLayout>
 

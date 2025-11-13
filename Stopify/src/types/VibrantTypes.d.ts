@@ -13,6 +13,8 @@ export interface Palette {
   LightMuted?: Swatch;
 }
 
+// SE AGREGA ESTAS LINEAS POR UN PROBLEMA DE TIPADO CON TS
+
 import type { Palette, Swatch } from '@vibrant/color';
 
 export type { Palette, Swatch };
