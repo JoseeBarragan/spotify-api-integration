@@ -13,34 +13,40 @@ const { imgUrl, color, artist } = Astro.props as {
 ---
 
 <div class="relative w-full h-[280px] overflow-hidden">
-    <img 
-        src={imgUrl} 
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-60"
-    />
+    <div 
+        class="absolute inset-0 bg-cover bg-center scale-110 opacity-60 blur-xl"
+        style={`background-image: url(${imgUrl});`}
+    ></div>
     <div 
         class="absolute inset-0"
         style={`background: linear-gradient(to bottom, ${color}80, #111);`}
-    />
+    ></div>
 
     <div class="relative z-10 flex items-end gap-6 p-8">
         <img 
-            src={imgUrl} 
-            alt=""
+            src={imgUrl}
+            alt={artist.name}
+            loading="lazy"
             class="w-48 h-48 rounded-md shadow-xl object-cover"
         />
+
         <div class="flex flex-col gap-3">
             <div class="flex gap-3 items-center">
-                <svg role="img" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                <svg width="24" height="24" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="11" fill="#3D91F4"/>
-                    <path fill="#FFFFFF" d="M16.59 7.58a1 1 0 0 1 .15 1.41l-5.03 6.28a1 1 0 0 1-1.48.08l-2.67-2.67a1 1 0 1 1 1.41-1.41l1.94 1.94 4.32-5.39a1 1 0 0 1 1.41-.24z"/>
+                    <path fill="#fff" d="M16.59 7.58a1 1 0 0 1 .15 1.41l-5.03 6.28a1 
+                        1 0 0 1-1.48.08l-2.67-2.67a1 1 0 1 1 1.41-1.41l1.94 1.94 
+                        4.32-5.39a1 1 0 0 1 1.41-.24z"/>
                 </svg>
-                <h1 class="text-white text-xs">
-                    Artista Verificado
-                </h1>
+                <h1 class="text-white text-xs">Artista Verificado</h1>
             </div>
+
             <h1 class="text-5xl font-bold text-white">{artist.name}</h1>
-            <h1 class="text-sm text-white">{FollowersFormat(artist.followers.total)} oyentes mensuales</h1>
+            <h1 class="text-sm text-white">
+                {FollowersFormat(artist.followers.total)} oyentes mensuales
+            </h1>
         </div>
+
     </div>
+
 </div>
