@@ -6,6 +6,7 @@ import TopArtists from "@components/Home/Artists"
 import TopTracks from "../components/Home/TopTracks"
 import Footer from "@components/footer.astro"
 import HomeCardsSkeleton from "@components/Skeletons/HomeCardsSkeleton.astro"
+import refreshToken from "@/services/refreshToken"
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 
@@ -16,6 +17,13 @@ const [newRealeases, topArtists, top50] = await Promise.all([
   fetch(`${FRONTEND_URL}/api/spotify/artists?ids=${artistsIds}`).then(r => r.json()),
   fetch(`${FRONTEND_URL}/api/spotify/playlists/1JVocmG0dGNuEFcQgnMZus/tracks`).then(r => r.json())
 ])
+
+
+if (newRealeases.status === 401) {
+    console.log("se termino el token")
+    await refreshToken()
+    window.location.reload()
+}
 
 ---
 

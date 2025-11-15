@@ -8,17 +8,22 @@ import { Vibrant } from "node-vibrant/node";
 import type { Palette } from "@/types/VibrantTypes";
 import { GetPaletteHex} from "@/utils/paletteUtils"
 import ArtistActionsTracks from "@/components/Artists/ArtistActionsTracks.tsx"
+import refreshToken from "@/services/refreshToken";
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 const { artist } = Astro.params
 
-const [artistData, artistTopTracks, artistAlbums]: [Artist, SpotifyTopTracksResponse, ArtistAlbumsResponse] = await Promise.all([
+const [artistData, artistTopTracks, artistAlbums] = await Promise.all([
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}`).then(r => r.json()),
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/top-tracks`).then(r => r.json()),
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums`).then(r => r.json())
 ])
 
-const imgUrl = artistAlbums.items[0]?.images.at(0)?.url
+if (artistData.expired || artistData.status === 401) {
+    console.log("se termino el token")
+    await refreshToken()
+}
+const imgUrl = artistAlbums?.items[0]?.images.at(0)?.url
 
 let palette: Palette | null = null
 

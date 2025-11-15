@@ -23,10 +23,10 @@ export const ALL: APIRoute = async ({ request }) => {
         }
     })
     if (res.status === 401) {
-        console.log("se termino el token")
         setCache(cacheKey, null)
-        await refreshToken()
-        window.location.reload()
+        return new Response(JSON.stringify({ expired: true }), {
+            status: 401
+        })
     }
     const data = await res.json()
 
