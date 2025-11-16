@@ -4,16 +4,26 @@ import type { SpotifyTrack } from "@/types/apiTypes";
 
 export default function ArtistActionsTracks ({topTracks}: {topTracks: SpotifyTrack[]}) {
     const [playing, setPlaying] = useState(false)
-    const [isFollowing, setIsFollowing] = useState(false);
+    const [trackPlaying, setTrackPlaying] = useState<null | string>(null)
+    const [isFollowing, setIsFollowing] = useState(false)
 
+    const handlePlayTrack = useCallback((track: string) => {
+        if(track === trackPlaying) {
+            setPlaying(!playing)
+        }
+        else {
+            setPlaying(true)
+            setTrackPlaying(track)
+        }
+    }, [playing])
 
     const handleFollowClick = () => {
-        setIsFollowing(!isFollowing);
-    };
+        setIsFollowing(!isFollowing)
+    }
 
-    const handlePlayTrack = useCallback(() => {
+    const handlePlay = useCallback(() => {
         setPlaying(!playing)
-    }, [])
+    }, [playing])
 
 
     return (
@@ -25,8 +35,12 @@ export default function ArtistActionsTracks ({topTracks}: {topTracks: SpotifyTra
                     shadow-lg hover:bg-green-400 transform hover:scale-105 transition-transform duration-150 active:scale-95
                     cursor-pointer
                     "
+                    onClick={handlePlay}
                 >
-                    <PlayIcon className="ml-1 size-1 sm:size-6" />
+                    {
+                        playing ? <p className="text-2xl flex font-mono">⏸</p> :
+                        <PlayIcon className="ml-1 size-1 sm:size-6" />
+                    }
                 </button>
                 <button 
                     onClick={handleFollowClick}
@@ -42,7 +56,7 @@ export default function ArtistActionsTracks ({topTracks}: {topTracks: SpotifyTra
                     {isFollowing ? 'Siguiendo' : 'Seguir'}
                 </button>
             </div>
-            <ArtistTopTracks onPlay={handlePlayTrack} topTracks={topTracks}/>
+            <ArtistTopTracks onPlay={handlePlayTrack} isPlaying={playing} trackPlaying={trackPlaying} topTracks={topTracks} />
         </div>
     )
 }

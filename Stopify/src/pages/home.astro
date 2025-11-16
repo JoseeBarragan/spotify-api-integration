@@ -19,7 +19,7 @@ const [newRealeases, topArtists, top50] = await Promise.all([
 ])
 
 
-if (newRealeases.status === 401) {
+if (newRealeases.status === 401 ||newRealeases.expired) {
     console.log("se termino el token")
     await refreshToken()
     window.location.reload()
