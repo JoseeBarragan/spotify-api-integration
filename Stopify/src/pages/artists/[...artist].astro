@@ -20,7 +20,6 @@ const [artistData, artistTopTracks, artistAlbums] = await Promise.all([
 ])
 
 if (artistData.expired || artistData.status === 401) {
-    console.log("se termino el token")
     await refreshToken()
 }
 const imgUrl = artistAlbums?.items[0]?.images.at(0)?.url ?? null
