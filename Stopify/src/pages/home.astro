@@ -5,21 +5,16 @@ import { getSecret } from "astro:env/server"
 import TopArtists from "@components/Home/Artists"
 import TopTracks from "../components/Home/TopTracks"
 import Footer from "@components/footer.astro"
-import HomeCardsSkeleton from "@components/Skeletons/HomeCardsSkeleton.astro"
 import refreshToken from "@/services/refreshToken"
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 
-const artistsIds = "4q3ewBCX7sLwd24euuV69X,06HL4z0CvFAxyc27GXpf02,0C8ZW7ezQVs4URX5aX7Kqx,1mcTU81TzQhprhouKaTkpq,6wWVKhxIU2cEi0K81v7HvP,1Xyo4u8uXC1ZmMpatF05PJ,3TVXtAsR1Inumwj472S9r4,6qqNVTkY8uBg9cP3Jd7DAH,6eUKZXaKkcviH0Ku9w2n3V,6M2wZ9GZgrQXHCFfjv46we"
-
-const [newRealeases, topArtists, top50] = await Promise.all([
-  fetch(`${FRONTEND_URL}/api/spotify/browse/new-releases?limit=15`).then(r => r.json()),
-  fetch(`${FRONTEND_URL}/api/spotify/artists?ids=${artistsIds}`).then(r => r.json()),
+const [top50] = await Promise.all([
   fetch(`${FRONTEND_URL}/api/spotify/playlists/1JVocmG0dGNuEFcQgnMZus/tracks`).then(r => r.json())
 ])
 
 // TODO: Arreglar el window.reload() cuando se actualiza el token
-if (newRealeases.status === 401 ||newRealeases.expired) {
+if (top50.status === 401 ||top50.expired) {
     await refreshToken()
 }
 
@@ -28,20 +23,11 @@ if (newRealeases.status === 401 ||newRealeases.expired) {
 <MainLayout>
     <div class="w-full h-full bg-gradient-to-t flex flex-col gap-6 from-neutral-900 via-neutral-900 to-violet-950/70 from-65% pl-11 py-6">
         
-        <div id="newRealeases-skeleton">
-            <HomeCardsSkeleton title="Nuevos Lanzamientos"/>
-        </div>
-        <NewRealeases client:only="react" newRealeases={newRealeases?.albums?.items}/>
-        
-        <div id="topArtists-skeleton">
-            <HomeCardsSkeleton title="Top Artistas"/>
-        </div>
-        <TopArtists client:only="react" artists={topArtists}/>
-        
-        <div id="topTracks-skeleton">
-            <HomeCardsSkeleton title="Top 50"/>
-        </div>
-        <TopTracks client:only="react" topTracks={top50}/>
+        <NewRealeases client:visible FRONTEND_URL={FRONTEND_URL}/>
+
+        <TopArtists client:visible FRONTEND_URL={FRONTEND_URL}/>
+
+        <TopTracks client:visible FRONTEND_URL={FRONTEND_URL}/>
         <Footer />
     </div>
 </MainLayout>

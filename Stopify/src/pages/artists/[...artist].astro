@@ -3,12 +3,13 @@ export const prerender = false;
 import MainLayout from "@layouts/mainLayout.astro";
 import ArtistHeader from "@components/Artists/ArtistHeader.astro"
 import { getSecret } from "astro:env/server";
-import type { Artist, SpotifyTopTracksResponse, ArtistAlbumsResponse } from "@/types/apiTypes"
-import { Vibrant } from "node-vibrant/node";
-import type { Palette } from "@/types/VibrantTypes";
 import { GetPaletteHex} from "@/utils/paletteUtils"
 import ArtistActionsTracks from "@/components/Artists/ArtistActionsTracks.tsx"
+import ArtistAlbums from "@components/Artists/ArtistAlbum"
 import refreshToken from "@/services/refreshToken";
+import type { Palette } from "@/types/VibrantTypes";
+import ArtistDiscography from "@/components/Artists/ArtistDiscography.astro";
+
 
 const FRONTEND_URL = getSecret("FRONTEND_URL")
 const { artist } = Astro.params
@@ -16,7 +17,7 @@ const { artist } = Astro.params
 const [artistData, artistTopTracks, artistAlbums] = await Promise.all([
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}`).then(r => r.json()),
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/top-tracks`).then(r => r.json()),
-    fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums`).then(r => r.json())
+    fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums?include_groups=single,album`).then(r => r.json())
 ])
 
 if (artistData.expired || artistData.status === 401) {
@@ -24,22 +25,25 @@ if (artistData.expired || artistData.status === 401) {
 }
 const imgUrl = artistAlbums?.items[0]?.images.at(0)?.url ?? null
 
-let palette: Palette | null = null
+let palette: {colors: Palette} | null = null
 
 if (imgUrl) {
-    palette = await Vibrant.from(imgUrl).getPalette()
+    palette = await (await fetch(`${FRONTEND_URL}/api/GradientColors/${imgUrl}`)).json()
 }
-const HexPalette = GetPaletteHex(palette)
+const HexPalette = GetPaletteHex(palette?.colors)
 
 ---
 <MainLayout>
     <div class="h-full w-full relative z-0 bg-neutral-900">
         <ArtistHeader imgUrl={imgUrl} color={HexPalette.DarkMuted} artist={artistData}/>
         <div 
-            class="w-full h-full z-40 p-5"
-            style={`background: linear-gradient(to top, #171717 85%, ${HexPalette.DarkMuted}80);`}
+            class="flex flex-col gap-5 w-full h-full z-40 p-5"
+            style={`background: linear-gradient(to top, #171717 87%, ${HexPalette.DarkMuted}80);`}
         >
-            <ArtistActionsTracks client:only="react" topTracks={artistTopTracks.tracks}/>
+            <ArtistActionsTracks client:visible topTracks={artistTopTracks.tracks}/>
+            <ArtistDiscography>
+                <ArtistAlbums client:visible artistDiscography={artistAlbums}/>
+            </ArtistDiscography>
         </div>
     </div>
 </MainLayout>

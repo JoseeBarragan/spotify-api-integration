@@ -81,7 +81,7 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
 }
 
 function YourPlaylists () {
-  const [playlists, setPlaylists] = useState(JSON.parse(localStorage.getItem("yourPlaylists") ?? "") as (Playlist | Album)[])
+  const [playlists, setPlaylists] = useState(JSON.parse(localStorage.getItem("yourPlaylists") ?? "") as (Playlist | Album)[] | string)
   
   return (
     <div>
