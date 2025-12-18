@@ -75,7 +75,7 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
           </div>
         </div>
       </aside>
-      <div className="w-full rounded-lg min-h-0 overflow-y-auto">{children}</div>
+      <div className="w-full rounded-lg card">{children}</div>
     </div>
   );
 }

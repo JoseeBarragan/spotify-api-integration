@@ -11,8 +11,18 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState<FilterDiscography>("Ultimos")
-  const [items, setItems] = useState(artistDiscography.items)
+  const [items, setItems] = useState(artistDiscography.items.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime()))
   const [visibleCount, setVisibleCount] = useState(1);
+
+  const getVisibleCount = (width: number) => {
+    if (width < 640) return 2
+    if (width < 800) return 3   
+    if (width < 1024) return 4  
+    if (width < 1280) return 5   
+    if (width < 1400) return 6
+    if (width < 1600) return 7
+    return 8                   
+  };
 
   const handleFilterDiscography = (filter: FilterDiscography) => {
     setFilter(filter)
@@ -31,28 +41,18 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
   }
 
   useEffect(() => {
-    function updateCount() {
-      const containerWidth = containerRef.current?.offsetWidth ?? 0;
-      const itemWidth = itemRef.current?.offsetWidth ?? 0;
+    const updateVisibleCount = () => {
+      setVisibleCount(getVisibleCount(window.innerWidth));
+    };
 
-      if (containerWidth === 0 || itemWidth === 0) return;
-
-      const count = Math.max(1, Math.floor(containerWidth / itemWidth));
-      setVisibleCount(count);
-    }
-
-    setTimeout(updateCount, 0);
-    setTimeout(updateCount, 100);
-
-    window.addEventListener("resize", updateCount);
-    return () => window.removeEventListener("resize", updateCount);
-  }, []);
-
-  const visibleItems = items.slice(0, visibleCount);
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []); 
 
   return (
     <>
-      <div className="flex gap-3">
+      <div className="flex gap-3 w-full">
         <button 
           onClick={() => handleFilterDiscography("Ultimos")}
           className={`cursor-pointer text-sm px-4 py-2 rounded-full transition-colors ease-in-out duration-150 ${filter === "Ultimos" ? "bg-white hover:bg-neutral-200" : "bg-neutral-700 text-white hover:bg-neutral-600 "}`}>
@@ -69,12 +69,12 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
             Sencillos y EP
         </button>
       </div>
-      <div ref={containerRef} className="flex flex-nowrap overflow-hidden w-full gap-3">
-        {visibleItems.map((item, idx) => (
+      <div ref={containerRef} className="flex overflow-hidden w-full gap-3">
+        {items.slice(0, visibleCount).map((item, idx) => (
           <div
               key={item.id}
               ref={idx === 0 ? itemRef : null}
-              className="max-w-[195px] h-full p-2.5 cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md flex-shrink-0 w-full"
+              className="flex-1 min-w-[160px] w-[clamp(160px,195px,220px)] max-w-[220px] h-full p-2.5 cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md flex-shrink-0"
           >
               <img
                   src={item.images.at(1)?.url ?? ""}

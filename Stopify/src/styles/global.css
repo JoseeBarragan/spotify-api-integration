@@ -15,19 +15,28 @@ body {
   --animation-pop: pop-animation 0.4s ease-in-out forwards;
 }
 
-
-.card {
+.card-scroll {
   overflow-y: auto;
+  max-height: 100%;
 }
 
-.card::-webkit-scrollbar {
+.card-scroll::-webkit-scrollbar {
   width: 6px;
 }
 
-.card::-webkit-scrollbar-thumb {
-  background: #22c55e;
+.card-scroll::-webkit-scrollbar-thumb {
+  background-color: #22c55e;
+  border-radius: 9999px;
 }
 
+.card-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px 0; 
+}
+
+.card-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
 @keyframes pop-animation {
   0% {

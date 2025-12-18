@@ -20,6 +20,7 @@ const [artistData, artistTopTracks, artistAlbums] = await Promise.all([
     fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums?include_groups=single,album`).then(r => r.json())
 ])
 
+// TODO: It might be better to refresh the token on the server side insted of the frontmatter
 if (artistData.expired || artistData.status === 401) {
     await refreshToken()
 }
@@ -34,7 +35,7 @@ const HexPalette = GetPaletteHex(palette?.colors)
 
 ---
 <MainLayout>
-    <div class="h-fit w-full relative z-0 min-h-0 bg-neutral-900 overflow-y-auto">
+    <div class="h-fit w-full z-0 min-h-0 bg-neutral-900 rounded-lg card-scroll">
         <ArtistHeader imgUrl={imgUrl} color={HexPalette.DarkMuted} artist={artistData}/>
         <div 
             class="flex flex-1 min-h-0 flex-col gap-5 w-full h-full z-40 p-5"
