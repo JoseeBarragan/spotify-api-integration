@@ -25,10 +25,10 @@ if (!(await getTokenFromFile())) await refreshToken()
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body class="min-h-screen min-w-full bg-black">
-		<div class="flex flex-col w-full min-h-screen">
+	<body class="min-w-full min-h-screen bg-black">
+		<div class="flex flex-col w-full h-screen">
 			<Header />
-            <div class="flex w-full gap-2 flex-1 px-3">
+            <div class="flex flex-1 w-full px-3 py-2 overflow-auto">
                 <Playlists client:load>
 					<slot />
 				</Playlists>

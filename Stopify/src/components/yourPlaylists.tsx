@@ -6,7 +6,7 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="relative gap-2 flex w-full min-h-full">
+    <div className="gap-2 flex flex-1 w-full min-h-0 overflow-hidden">
       <aside
         className={`
           flex flex-col rounded-md py-5 overflow-hidden transition-[width] ease-in-out
@@ -75,7 +75,7 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
           </div>
         </div>
       </aside>
-      <div className="flex-1 rounded-lg overflow-hidden">{children}</div>
+      <div className="w-full rounded-lg min-h-0 overflow-y-auto">{children}</div>
     </div>
   );
 }

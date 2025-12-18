@@ -15,7 +15,7 @@ export default function ArtistTopTracks ({onPlay, topTracks, trackPlaying, isPla
 
     return (
         <div className="flex flex-col gap-3">
-            <h1 className="font-bold text-2xl text-white">Populares</h1>
+            <h1 className="font-bold text-3xl text-white">Populares</h1>
             <div className="flex flex-col gap-2">
                 {artistTracks.map((t, i) => {
                     const isPlayingThis = trackPlaying === t.name

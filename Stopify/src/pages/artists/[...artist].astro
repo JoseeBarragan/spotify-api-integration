@@ -34,10 +34,10 @@ const HexPalette = GetPaletteHex(palette?.colors)
 
 ---
 <MainLayout>
-    <div class="h-full w-full relative z-0 bg-neutral-900">
+    <div class="h-fit w-full relative z-0 min-h-0 bg-neutral-900 overflow-y-auto">
         <ArtistHeader imgUrl={imgUrl} color={HexPalette.DarkMuted} artist={artistData}/>
         <div 
-            class="flex flex-col gap-5 w-full h-full z-40 p-5"
+            class="flex flex-1 min-h-0 flex-col gap-5 w-full h-full z-40 p-5"
             style={`background: linear-gradient(to top, #171717 87%, ${HexPalette.DarkMuted}80);`}
         >
             <ArtistActionsTracks client:visible topTracks={artistTopTracks.tracks}/>

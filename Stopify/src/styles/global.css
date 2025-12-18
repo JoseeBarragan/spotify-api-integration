@@ -8,11 +8,26 @@ html {
 body {
   font-weight: 500;
   letter-spacing: 0.2px;
+  overflow-y: hidden;
 }
 
 :root {
   --animation-pop: pop-animation 0.4s ease-in-out forwards;
 }
+
+
+.card {
+  overflow-y: auto;
+}
+
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: #22c55e;
+}
+
 
 @keyframes pop-animation {
   0% {
