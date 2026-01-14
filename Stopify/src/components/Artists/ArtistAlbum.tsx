@@ -15,13 +15,13 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
   const [visibleCount, setVisibleCount] = useState(1);
 
   const getVisibleCount = (width: number) => {
-    if (width < 640) return 2
-    if (width < 800) return 3   
-    if (width < 1024) return 4  
-    if (width < 1280) return 5   
-    if (width < 1400) return 6
-    if (width < 1600) return 7
-    return 8                   
+    if (width < 500) return 2;
+    if (width < 670) return 3;
+    if (width < 850) return 4;
+    if (width < 1020) return 5;
+    if (width < 1190) return 6;
+    if (width < 1365) return 7;
+    return 8;
   };
 
   const handleFilterDiscography = (filter: FilterDiscography) => {
@@ -41,14 +41,17 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
   }
 
   useEffect(() => {
-    const updateVisibleCount = () => {
-      setVisibleCount(getVisibleCount(window.innerWidth));
-    };
+    if (!containerRef.current) return
 
-    updateVisibleCount();
-    window.addEventListener("resize", updateVisibleCount);
-    return () => window.removeEventListener("resize", updateVisibleCount);
-  }, []); 
+    const observer = new ResizeObserver(entries => {
+      const width = entries.at(0)?.contentRect.width
+      setVisibleCount(getVisibleCount(width || 1))
+    })
+
+    observer.observe(containerRef.current)
+
+    return () => observer.disconnect()
+  }, []);
 
   return (
     <>
@@ -70,23 +73,29 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
         </button>
       </div>
       <div ref={containerRef} className="flex overflow-hidden w-full gap-3">
-        {items.slice(0, visibleCount).map((item, idx) => (
-          <div
-              key={item.id}
-              ref={idx === 0 ? itemRef : null}
-              className="flex-1 min-w-[160px] w-[clamp(160px,195px,220px)] max-w-[220px] h-full p-2.5 cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md flex-shrink-0"
-          >
-              <img
-                  src={item.images.at(1)?.url ?? ""}
-                  alt={item.name}
-                  width={192}
-                  height={192}
-                  className="rounded-md shadow-xl object-cover w-full h-auto"
-              />
-              <h1 className="text-neutral-100">{item.name}</h1>
-              <p className="flex items-center gap-1 text-neutral-500 capitalize">{item.album_type} <span className="size-1 bg-neutral-400 inline-block rounded-full"></span> {item.release_date.split("", 4)}</p>
-          </div>
-        ))}
+        {
+          items.length !== 0 ? (
+            items.slice(0, visibleCount).map((item, idx) => (
+              <div
+                  key={item.id}
+                  ref={idx === 0 ? itemRef : null}
+                  className="flex-1 min-w-[160px] w-[clamp(160px,195px,220px)] max-w-[220px] h-full p-2.5 cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md flex-shrink-0"
+              >
+                  <img
+                      src={item.images.at(1)?.url ?? ""}
+                      alt={item.name}
+                      width={192}
+                      height={192}
+                      className="rounded-md shadow-xl object-cover w-full h-auto"
+                  />
+                  <h1 className="text-neutral-100">{item.name}</h1>
+                  <p className="flex items-center gap-1 text-neutral-500 capitalize">{item.album_type} <span className="size-1 bg-neutral-400 inline-block rounded-full"></span> {item.release_date.split("", 4)}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-white py-4 px-2">No hay novedades sobre este artista en este campo</p>
+          )
+        }
       </div>
     </>
   );

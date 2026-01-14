@@ -6,11 +6,11 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="gap-2 flex flex-1 w-full min-h-0 overflow-hidden">
+    <div className="gap-2 relative flex flex-1 w-full min-h-0 overflow-hidden">
       <aside
         className={`
-          flex flex-col rounded-md py-5 overflow-hidden transition-[width] ease-in-out
-          ${open ? "absolute inset-0 z-40 bg-neutral-900 duration-500" : "relative z-10 bg-neutral-600/25 duration-300"}
+          flex flex-col min-h-0 rounded-md py-5 overflow-hidden transition-[width] ease-in-out
+          ${open ? "absolute inset-0 z-50 bg-neutral-900 duration-500" : "relative z-10 bg-neutral-600/25 duration-300"}
         `}
         style={{
           width: open
@@ -75,7 +75,7 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
           </div>
         </div>
       </aside>
-      <div className="w-full rounded-lg card">{children}</div>
+      <div className="flex-1 w-full min-h-0 z-0 overflow-hidden rounded-lg">{children}</div>
     </div>
   );
 }

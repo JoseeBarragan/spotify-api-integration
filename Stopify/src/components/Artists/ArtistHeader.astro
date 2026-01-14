@@ -12,7 +12,7 @@ const { imgUrl, color, artist } = Astro.props as {
 
 ---
 
-<div class="relative w-full h-[280px] overflow-hidden">
+<div class="relative w-full min-h-fit overflow-hidden">
     <img
         src={imgUrl}
         alt={artist.name}
