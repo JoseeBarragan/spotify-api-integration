@@ -9,7 +9,7 @@ export const ALL: APIRoute = async ({ request }) => {
     const url = `https://api.spotify.com/v1/${path}`
     const cacheKey = url
     const accessToken = await getTokenFromFile()
-    
+    console.log("fetch al endpoint: ", url, "accessToken: ", accessToken)
     const cached = getCache(cacheKey)
     if (cached && (typeof (cached as any).error === "undefined")) {
         return new Response(JSON.stringify(cached), {

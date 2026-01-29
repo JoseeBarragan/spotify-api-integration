@@ -75,7 +75,7 @@ export default function Playlists ({children}: {children: React.ReactNode}) {
           </div>
         </div>
       </aside>
-      <div className="flex-1 w-full min-h-0 z-0 overflow-hidden rounded-lg">{children}</div>
+      <div className="flex-1 w-full min-h-0 z-0 overflow-hidden rounded-lg bg-neutral-900">{children}</div>
     </div>
   );
 }

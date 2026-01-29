@@ -1,5 +1,5 @@
 import type { ArtistAlbumsResponse } from "@/types/apiTypes";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   artistDiscography: ArtistAlbumsResponse;
@@ -79,7 +79,7 @@ export default function ArtistAlbums({ artistDiscography }: Props) {
               <div
                   key={item.id}
                   ref={idx === 0 ? itemRef : null}
-                  className="flex-1 min-w-[160px] w-[clamp(160px,195px,220px)] max-w-[220px] h-full p-2.5 cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md flex-shrink-0"
+                  className="flex-1 min-w-40 w-[clamp(160px,195px,220px)] h-full p-2.5 cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md shrink-0"
               >
                   <img
                       src={item.images.at(1)?.url ?? ""}

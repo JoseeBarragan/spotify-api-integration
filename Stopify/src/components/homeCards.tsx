@@ -4,7 +4,7 @@ export default function HomeCards ({item, imgClass}: {item: Album | Artist | Tra
     return(
         <div 
             title={item.name}
-            className="cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md flex-shrink-0 w-full h-full"
+            className="cursor-pointer hover:bg-neutral-800 transition-colors duration-75 ease-linear rounded-md shrink-0 w-full h-full"
         >
             <div className="flex flex-col gap-1 h-full py-3">
                 <img src={ "images" in item ? item.images.at(0)?.url : item.album.images.at(0)?.url} className={`mx-auto ${imgClass}`}/>

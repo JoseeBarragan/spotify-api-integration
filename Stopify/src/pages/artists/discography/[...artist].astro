@@ -1,0 +1,19 @@
+---
+export const prerender = false
+
+import MainLayout from "@/layouts/mainLayout.astro"
+import ArtistDiscography from "@/components/Artists/Discography/ArtistDiscography"
+import { getSecret } from "astro:env/server"
+
+const { artist } = Astro.params
+const FRONTEND_URL = getSecret("FRONTEND_URL")
+
+const artistData = await (await fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}`)).json()
+const artistDiscography = await (await fetch(`${FRONTEND_URL}/api/spotify/artists/${artist}/albums`)).json()
+---
+
+<MainLayout>
+    <div class="card-scroll w-full">
+        <ArtistDiscography client:visible artist={artistData} discography={artistDiscography}/>
+    </div>
+</MainLayout>
