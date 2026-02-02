@@ -242,7 +242,6 @@ export interface SpotifyImage {
 }
 
 // ENDPOINT: /v1/artists/{id}/albums
-// Ejemplo: `${FRONTEND_URL}/api/spotify/artists/${artist}/albums`
 
 export interface ArtistAlbumsResponse {
   href: string;
@@ -269,4 +268,30 @@ export interface SimplifiedAlbum {
   total_tracks: number;
   type: "album";
   uri: string;
+}
+
+// ENDPOINT: v1/albums/{id}/tracks
+
+interface TrackObject {
+  id: string;
+  name: string;
+  duration_ms: number;
+  artists: SimplifiedArtist[];
+  explicit: boolean;
+  external_urls: ExternalUrls;
+  href: string;
+  preview_url: string | null;
+  track_number: number;
+  type: string;
+  uri: string;
+}
+
+interface AlbumTracksResponse {
+  href: string;
+  items: TrackObject[];
+  limit: number;
+  next: string | null;
+  offset: number;
+  previous: string | null;
+  total: number;
 }

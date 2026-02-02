@@ -1,16 +1,32 @@
 import type { ArtistAlbumsResponse } from "@/types/apiTypes";
-import { lazy } from "react";
+import { lazy, useState } from "react";
 const ShowGridDiscography = lazy(() => import("./ShowGridDiscography"));
 const ShowListDiscography = lazy(() => import("./ShowListDiscography"));
 
-export default function ShowDiscography ({discography, filter, type}: {discography: ArtistAlbumsResponse, filter: "name" | "release", type: "list" | "grid"}) {
-    
-    const filteredDiscography = discography.items.sort((a, b) => {
-        if(filter === "name") {
-            return a.name.localeCompare(b.name)
+export default function ShowDiscography ({discography, discographyType, filter, type}: {discography: ArtistAlbumsResponse, discographyType: string, filter: {sortBy: "release" | "name", orderAsc: boolean}, type: "list" | "grid"}) {
+    const [currentTrackId, setCurrentTrackId] = useState<string | null>(null)
+    const [isPlaying, setIsPlaying] = useState(false)
+    const filtered = discography.items.sort((a, b) => {
+        if(filter.sortBy === "name") {
+            return filter.orderAsc
+                ? a.name.localeCompare(b.name)
+                : b.name.localeCompare(a.name);
         }
-        return a.name.localeCompare(b.name)
+        const [yA, mA, dA] = a.release_date.split("-").map(Number);
+        const [yB, mB, dB] = b.release_date.split("-").map(Number);
+
+        const timeA = new Date(yA!, mA! - 1, dA).getTime();
+        const timeB = new Date(yB!, mB! - 1, dB).getTime();
+
+        return filter.orderAsc ? timeA - timeB : timeB - timeA;
     })
+
+    const filteredDiscography = discographyType === "todo" ? filtered : filtered.filter(fd => {
+        if(discographyType === "album") {
+            return fd.album_type === "album"
+        }
+        return fd.album_type === "single"
+    }) 
 
     return (
         <div>
@@ -25,7 +41,7 @@ export default function ShowDiscography ({discography, filter, type}: {discograp
                     </div>
                 ) : (
                     filteredDiscography.map(fd => (
-                        <ShowListDiscography key={fd.id} fd={fd}/>
+                        <ShowListDiscography key={fd.id} fd={fd} currentTrackId={currentTrackId} isPlaying={isPlaying} setCurrentTrackId={setCurrentTrackId} setIsPlaying={setIsPlaying}/>
                     ))
                 )
             }

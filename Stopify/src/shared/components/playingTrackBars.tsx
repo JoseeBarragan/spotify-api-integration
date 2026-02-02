@@ -1,8 +1,7 @@
 export default function PlayingTrackBars () {
     const neonGreen = "#1ED760"
     return (
-        <div className="flex flex-col items-center justify-center p-4 min-h-[100px] w-full">
-            {/* Bloque de estilos para la animación. Es la forma más corta de incluir keyframes en React/JSX sin archivos CSS separados. */}
+        <div className="flex flex-col items-center justify-center w-full">
             <style>
                 {`
                     @keyframes pulse-bar {

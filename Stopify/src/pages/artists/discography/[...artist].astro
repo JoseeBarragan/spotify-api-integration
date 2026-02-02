@@ -13,7 +13,7 @@ const artistDiscography = await (await fetch(`${FRONTEND_URL}/api/spotify/artist
 ---
 
 <MainLayout>
-    <div class="card-scroll w-full">
+    <div class="card-scroll w-full overflow-x-hidden">
         <ArtistDiscography client:visible artist={artistData} discography={artistDiscography}/>
     </div>
 </MainLayout>
